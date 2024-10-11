@@ -9,11 +9,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-    //화면에 그릴 JSX 태그를 지정한다.
-  <React.StrictMode>
-      {/* App은 src/App.tsx로부터 임포트 한 것을 사용한다.*/}
-    <App />
-  </React.StrictMode>
+    <h1>제목</h1>
 );
 
 // If you want to start measuring performance in your app, pass a function
