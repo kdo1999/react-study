@@ -13,18 +13,20 @@ const Fizz = (props: FizzProps) => {
     return <span>{isFizz? 'Fizz' : ''}</span>
 }
 
+// 앞의 코드 예의 Type BuzzProps 이후를 수정
 type BuzzProps = {
     isBuzz: boolean
+    onClick: () => void
 }
 
 // Buzz는 메모이제이션한 함수 컴포넌트
 // isBuzz가 true이면 Buzz라고 표시하고, 그 이외에는 표시하지 않는다.
 // 부모 컴포넌트가 다시 그려져도 isBuzz가 변화하지 않는 한 Buzz는 다시 그려지지 않는다.
 const Buzz = memo<BuzzProps>((props) => {
-    const { isBuzz } = props
+    const { isBuzz, onClick } = props
     console.log(`Buzz가 다시 그려졌습니다. isBuzz=${isBuzz}`)
     return (
-        <span>
+        <span onClick={onClick}>
             {isBuzz? 'Buzz' : ''}
         </span>
     )
@@ -35,6 +37,11 @@ export const Parent = () => {
     const [count, setCount] = useState(1)
     const isFizz = count % 3=== 0
     const isBuzz = count % 5=== 0
+
+    // 이 함수는 Parent가 다시 그려질 때 마다 작성된다.
+    const onBuzzClick = () => {
+        console.log(`Buzz가 클릭됐습니다. isBuzz=${isBuzz}`)
+    }
     
     console.log(`Parent가 다시 그려졌습니다. Count=${count}`)
     return (
@@ -43,7 +50,7 @@ export const Parent = () => {
             <p>{`현재 카운트: ${count}`}</p>
             <p>
                 <Fizz isFizz={isFizz} />
-                <Buzz isBuzz={isBuzz} />
+                <Buzz isBuzz={isBuzz} onClick={onBuzzClick} />
             </p>
         </div>
     )
