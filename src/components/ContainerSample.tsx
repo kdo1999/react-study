@@ -1,4 +1,13 @@
-const Container = (props: {title: string; children: React.ReactElement}) => {
+import React from 'react';
+
+// Container의 props 타입을 지정한다.
+
+type ContainerProps = {
+    title: string
+    children: React.ReactNode
+}
+
+const Container = (props: ContainerProps): JSX.Element => {
     const { title, children } = props
     
     return (
@@ -10,7 +19,7 @@ const Container = (props: {title: string; children: React.ReactElement}) => {
     )
 }
 
-const Parent = () => {
+const Parent = (): JSX.Element => {
     return (
         // Container를 사용할 때, 다른 요소를 감싸서 사용한다.
         <Container title="Hello">
