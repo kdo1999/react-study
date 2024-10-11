@@ -1,57 +1,60 @@
-import React, { memo, useState } from 'react'
+import React, { useState, useCallback } from "react";
 
-type FizzProps = {
-    isFizz: boolean
-}
-
-// Fizz는 보통의 함수 컴포넌트
-// isFizz가 true이면 Fizz라고 표시하고, 그 이외에는 표시하지 않는다.
-// isFizz의 변화에 관계없이, 부모가 다시 그려지면 Fizz도 다시 그려진다.
-const Fizz = (props: FizzProps) => {
-    const { isFizz } = props
-    console.log(`Fizz가 다시 그려졌습니다. isFizz=${isFizz}`)
-    return <span>{isFizz? 'Fizz' : ''}</span>
-}
-
-// 앞의 코드 예의 Type BuzzProps 이후를 수정
-type BuzzProps = {
-    isBuzz: boolean
+type ButtonProps = {
     onClick: () => void
 }
 
-// Buzz는 메모이제이션한 함수 컴포넌트
-// isBuzz가 true이면 Buzz라고 표시하고, 그 이외에는 표시하지 않는다.
-// 부모 컴포넌트가 다시 그려져도 isBuzz가 변화하지 않는 한 Buzz는 다시 그려지지 않는다.
-const Buzz = memo<BuzzProps>((props) => {
-    const { isBuzz, onClick } = props
-    console.log(`Buzz가 다시 그려졌습니다. isBuzz=${isBuzz}`)
-    return (
-        <span onClick={onClick}>
-            {isBuzz? 'Buzz' : ''}
-        </span>
-    )
+// DecrementButton은 보통의 함수 컴포넌트로 버튼을 표시한다.
+const DecrementButton = (props: ButtonProps) => {
+    const { onClick } = props
+
+    console.log('DecrementButton이 다시 그려졌습니다.')
+
+    return <button onClick={onClick}>Decrement</button>
+}
+
+// IncrementButton은 메모이제이션한 함수 컴포넌트로 버튼을 표시한다.
+const IncrementButton = React.memo((props: ButtonProps) => {
+    const { onClick } = props
+
+    console.log('IncrementButton이 다시 그려졌습니다.')
+
+    return <button onClick={onClick}>Increment</button>
 })
 
-// 이 형식으로 export 했을 때는 import { Parent } from ...로 읽는다.
-export const Parent = () => {
-    const [count, setCount] = useState(1)
-    const isFizz = count % 3=== 0
-    const isBuzz = count % 5=== 0
+//DoubleButton은 메모이제이션한 함수 컴포넌트로 버튼을 표시한다.
+const DoubleButton = React.memo((props: ButtonProps) => {
+    const { onClick } = props
 
-    // 이 함수는 Parent가 다시 그려질 때 마다 작성된다.
-    const onBuzzClick = () => {
-        console.log(`Buzz가 클릭됐습니다. isBuzz=${isBuzz}`)
+    console.log('DoubleButton이 다시 그려졌습니다.')
+
+    return <button onClick={onClick}>Double</button>
+})
+
+export const Parent = () => {
+    const [count, setCount] = useState(0)
+
+    const decrement = () => {
+        setCount((c) => c - 1)
     }
-    
-    console.log(`Parent가 다시 그려졌습니다. Count=${count}`)
+
+    const increment = () => {
+        setCount((c) => c + 1)
+    }
+
+    // useCallback을 사용해 함수를 메모이제이션 한다.
+    const double = useCallback(() => {
+        setCount((c) => c * 2)
+        // 두 번째 인수는 빈 배열이므로, useCallback은 항상 같은 함수를 반환한다
+    }, [])
     return (
         <div>
-            <button onClick={() => setCount((c) => c+1)}>+1</button>
-            <p>{`현재 카운트: ${count}`}</p>
-            <p>
-                <Fizz isFizz={isFizz} />
-                <Buzz isBuzz={isBuzz} onClick={onBuzzClick} />
-            </p>
+            <p>Count: {count}</p>
+            {/* 컴포넌트에 함수를 전달한다 */}
+            <DecrementButton onClick={decrement} />
+            <IncrementButton onClick={increment} />
+            {/* 메모이제이션된 컴포넌트에 메모이제이션된 함수를 전달한다. */}
+            <DoubleButton onClick={double} />
         </div>
     )
 }
