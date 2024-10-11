@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App'; // App.js에서 APP 함수를 로딩한다.
+// App대신 Hello를 임포트 한다.
+import Hello from './components/Hello'
+// import App from './App'; // App.js에서 APP 함수를 로딩한다.
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +11,10 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-    <h1>제목</h1>
+    <React.StrictMode>
+        {/* App에서 Hello로 치환한다. */}
+        <Hello />
+    </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
