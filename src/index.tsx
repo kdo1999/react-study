@@ -6,6 +6,7 @@ import Hello from './components/Hello'
 // import App from './App'; // App.js에서 APP 함수를 로딩한다.
 import reportWebVitals from './reportWebVitals';
 import { Parent } from './components/Parent'
+import UseMemoSample from './components/UseMemoSample'
 
 const root = ReactDOM.createRoot(
     // index.html에 있는 root를 ID로 가진 요소를 지정한다.
@@ -14,7 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         {/* App에서 Hello로 치환한다. */}
-        <Parent />
+        <UseMemoSample />
     </React.StrictMode>,
 );
 
