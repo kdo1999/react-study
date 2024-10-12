@@ -10,6 +10,7 @@ import UseMemoSample from './components/UseMemoSample'
 import Clock from './components/Clock'
 import UseContextSample from './components/UseContextSample'
 import UseRefSample from './components/UseRefSample'
+import UseImperativeHandle from './components/UseImperativeHandle'
 
 const root = ReactDOM.createRoot(
     // index.html에 있는 root를 ID로 가진 요소를 지정한다.
@@ -17,7 +18,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <UseRefSample />
+        <UseImperativeHandle />
     </React.StrictMode>,
 );
 
