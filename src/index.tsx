@@ -11,6 +11,7 @@ import Clock from './components/Clock'
 import UseContextSample from './components/UseContextSample'
 import UseRefSample from './components/UseRefSample'
 import UseImperativeHandle from './components/UseImperativeHandle'
+import CustomHook from './components/CustomHook'
 
 const root = ReactDOM.createRoot(
     // index.html에 있는 root를 ID로 가진 요소를 지정한다.
@@ -18,7 +19,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <UseImperativeHandle />
+        <CustomHook />
     </React.StrictMode>,
 );
 
